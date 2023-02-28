@@ -1,5 +1,7 @@
 package com.jianglin.chaincore.chain;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Objects;
 
 /**
@@ -8,6 +10,7 @@ import java.util.Objects;
  * @Date 2023/2/24 15:48
  * @Description: 处理器上下文信息
  */
+@Slf4j
 public class HandlerChainContext<T> {
 
 	// 下个处理
@@ -22,22 +25,20 @@ public class HandlerChainContext<T> {
 		this.handler = handler;
 	}
 
-	protected void handlerWork(T t) {
-		this.handler.doHandler(this, t);
-	}
+	public void handlerWork(T t) { this.handler.doHandler(this, t);}
 
-	protected void rollBackWork(T t) {
+	private void rollBackWork(T t) {
 		this.handler.doRollBack(this, t);
 	}
 
 	public void firePervContext(T t) {
-		if (Objects.nonNull(t)) {
+		if (Objects.nonNull(this.perv)) {
 			this.perv.rollBackWork(t);
 		}
 	}
 
 	public void fireNextContext(T t) {
-		if (Objects.nonNull(t)) {
+		if (Objects.nonNull(this.next)) {
 			this.next.handlerWork(t);
 		}
 	}

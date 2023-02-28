@@ -1,12 +1,12 @@
 package com.jianglin.chaincore.handler;
 
-import com.jianglin.chainapi.reqeust.RebateRequest;
 import com.jianglin.chaincore.chain.AbstractOrderHandler;
 import com.jianglin.chaincore.chain.HandlerChainContext;
 import com.jianglin.chaincore.context.OrderContexts;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * @FileName RebateChainHandlerBizImpl
@@ -14,12 +14,14 @@ import org.springframework.stereotype.Service;
  * @Date 2023/2/24 16:46
  * @Description:
  */
-@Service
+@Component
+@RequiredArgsConstructor
 public class RebateChainHandlerBizImpl extends AbstractOrderHandler<OrderContexts> {
 	private static final Logger logger = LoggerFactory.getLogger(RebateChainHandlerBizImpl.class);
 	@Override
 	public void doHandler(HandlerChainContext handlerChainContext, OrderContexts request) {
 		logger.info("处理抵扣金业务开始:[{}]", request.getRebateRequest());
+		handlerChainContext.fireNextContext(request);
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import com.jianglin.chaincore.handler.CouponChainHandlerBizImpl;
 import com.jianglin.chaincore.handler.OrderChainHandlerBizImpl;
 import com.jianglin.chaincore.handler.RebateChainHandlerBizImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,17 +19,15 @@ import org.springframework.context.annotation.Configuration;
 @RequiredArgsConstructor
 public class CreateOrderChainConfig {
 	private final CouponChainHandlerBizImpl couponChainHandlerBiz;
-
 	private final OrderChainHandlerBizImpl orderChainHandlerBiz;
-
 	private final RebateChainHandlerBizImpl rebateChainHandlerBiz;
 
 	@Bean("createOrderChainPipeline")
 	public HandlerPipeline<OrderContexts> createOrderChainPipeline() {
 		HandlerPipeline<OrderContexts> handlerPipeline = new HandlerPipeline<>();
-		handlerPipeline.addChainList(couponChainHandlerBiz);
-		handlerPipeline.addChainList(orderChainHandlerBiz);
-		handlerPipeline.addChainList(rebateChainHandlerBiz);
+		handlerPipeline.addChainLast(couponChainHandlerBiz);
+		handlerPipeline.addChainLast(orderChainHandlerBiz);
+		handlerPipeline.addChainLast(rebateChainHandlerBiz);
 		return handlerPipeline;
 	}
 }

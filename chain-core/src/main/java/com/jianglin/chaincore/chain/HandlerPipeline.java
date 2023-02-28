@@ -16,12 +16,12 @@ public class HandlerPipeline<T> {
 	public HandlerPipeline() {
 		handlerChainContext = new HandlerChainContext<>(new AbstractOrderHandler() {
 			@Override
-			public void doHandler(HandlerChainContext handlerChainContext, Object request) {
+			public void doHandler(HandlerChainContext chainContext, Object request) {
 				handlerChainContext.fireNextContext(request);
 			}
 
 			@Override
-			public void doRollBack(HandlerChainContext handlerChainContext, Object request) {
+			public void doRollBack(HandlerChainContext chainContext, Object request) {
 				handlerChainContext.firePervContext(request);
 			}
 		});
@@ -32,7 +32,7 @@ public class HandlerPipeline<T> {
 		handlerChainContext.handlerWork(t);
 	}
 
-	public void addChainList(AbstractOrderHandler handler) {
+	public void addChainLast(AbstractOrderHandler handler) {
 		HandlerChainContext chainContext = handlerChainContext;
 		while (Objects.nonNull(chainContext.next)) {
 			chainContext = chainContext.next;

@@ -1,5 +1,7 @@
 package com.jianglin.chaincore.biz;
 
+import com.jianglin.chaincore.context.OrderContexts;
+
 /**
  * @FileName OrderBiz
  * @Author lin.jiang
@@ -7,5 +9,5 @@ package com.jianglin.chaincore.biz;
  * @Description:
  */
 public interface OrderBiz {
-	void submitOrder();
+	void submitOrder(OrderContexts orderContexts);
 }
