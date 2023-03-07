@@ -2,6 +2,8 @@ package com.jianglin.chaincore.chain;
 
 import com.jianglin.chaincore.context.OrderContexts;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -38,7 +40,7 @@ public class HandlerPipeline<T> {
 			chainContext = chainContext.next;
 		}
 		HandlerChainContext newChainContext = new HandlerChainContext(handler);
-		chainContext = newChainContext.next;
+		chainContext.next = newChainContext;
 		newChainContext.perv = chainContext;
 	}
 }
